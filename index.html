@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudyBot — AI Adaptive Study Recommender</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🎓</span>
+        <span class="logo-text">StudyBot</span>
+        <span class="logo-tag">AI Recommender</span>
+      </div>
+      <nav class="nav-tabs">
+        <button class="nav-btn active" data-page="home">Home</button>
+        <button class="nav-btn" data-page="recommend">Recommend</button>
+        <button class="nav-btn" data-page="progress">Progress</button>
+        <button class="nav-btn" data-page="about">About</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGES -->
+  <main class="main-content">
+
+    <!-- HOME PAGE -->
+    <section class="page active" id="page-home">
+      <div class="hero">
+        <div class="hero-badge">⚡ AI-Powered Learning</div>
+        <h1 class="hero-title">Study Smarter<br/><span class="accent">Not Harder</span></h1>
+        <p class="hero-sub">An intelligent agent that finds the right study materials for you — and <em>learns</em> from your feedback to get better every session.</p>
+        <div class="hero-cta">
+          <button class="btn-primary" onclick="goPage('recommend')">Get Recommendations →</button>
+          <button class="btn-secondary" onclick="goPage('about')">How it works</button>
+        </div>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feat-icon">🔍</div>
+          <h3>Smart Search</h3>
+          <p>Constraint-based filtering across 30+ curated materials in Python, Math, DSA & AI.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">📊</div>
+          <h3>Heuristic Ranking</h3>
+          <p>Materials ranked using a weighted score formula — difficulty &amp; type weights tune each result.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🧠</div>
+          <h3>Adaptive Learning</h3>
+          <p>Your star ratings update material scores in real-time. The agent genuinely learns from you.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🤖</div>
+          <h3>Intelligent Agent</h3>
+          <p>Perceive → Search → Recommend → Learn. A classic AI agent loop powering every session.</p>
+        </div>
+      </div>
+
+      <div class="subjects-strip">
+        <span class="strip-label">Available Subjects</span>
+        <div class="subject-chips">
+          <span class="chip">🐍 Python</span>
+          <span class="chip">📐 Math</span>
+          <span class="chip">🌳 DSA</span>
+          <span class="chip">🤖 AI</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECOMMEND PAGE -->
+    <section class="page" id="page-recommend">
+      <div class="page-header">
+        <h2>Get Recommendations</h2>
+        <p>Tell the agent what you need and it will find your best study materials.</p>
+      </div>
+
+      <div class="recommend-layout">
+        <!-- Preferences Form -->
+        <div class="pref-panel" id="pref-panel">
+          <h3 class="panel-title">🤖 StudyBot: Hello! Set your preferences below.</h3>
+
+          <div class="form-group">
+            <label>📚 Subject</label>
+            <div class="option-group" id="opt-subject">
+              <button class="opt-btn" data-val="Python">Python</button>
+              <button class="opt-btn" data-val="Math">Math</button>
+              <button class="opt-btn" data-val="DSA">DSA</button>
+              <button class="opt-btn" data-val="AI">AI</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>🎯 Difficulty</label>
+            <div class="option-group" id="opt-difficulty">
+              <button class="opt-btn" data-val="Easy">Easy</button>
+              <button class="opt-btn" data-val="Medium">Medium</button>
+              <button class="opt-btn" data-val="Hard">Hard</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>📂 Material Type</label>
+            <div class="option-group" id="opt-type">
+              <button class="opt-btn" data-val="Video">Video</button>
+              <button class="opt-btn" data-val="Notes">Notes</button>
+              <button class="opt-btn" data-val="Practice">Practice</button>
+            </div>
+          </div>
+
+          <button class="btn-primary full-width" id="search-btn" onclick="renderResults()">
+            🔍 Search Materials
+          </button>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="results-panel">
+          <div class="results-placeholder" id="results-placeholder">
+            <div class="placeholder-icon">📖</div>
+            <p>Choose your subject, difficulty &amp; type to see recommendations.</p>
+          </div>
+          <div id="results-content" class="hidden"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRESS PAGE -->
+    <section class="page" id="page-progress">
+      <div class="page-header">
+        <h2>Learning Progress</h2>
+        <p>See how the system has adapted based on your feedback history.</p>
+      </div>
+
+      <div id="progress-content">
+        <div class="empty-feedback" id="empty-feedback">
+          <div class="empty-icon">📭</div>
+          <h3>No feedback yet</h3>
+          <p>Rate materials after getting recommendations to track your progress here.</p>
+          <button class="btn-primary" onclick="goPage('recommend')">Get Recommendations →</button>
+        </div>
+        <div id="progress-table-wrap" class="hidden"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT PAGE -->
+    <section class="page" id="page-about">
+      <div class="page-header">
+        <h2>How It Works</h2>
+        <p>The AI concepts powering every recommendation.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-num">01</div>
+          <h3>Intelligent Agent</h3>
+          <p>The system models a classic AI agent with four roles: <strong>Perceive</strong> (reads your preferences), <strong>Brain</strong> (applies search + ranking), <strong>Action</strong> (recommends materials), and <strong>Learn</strong> (updates from feedback).</p>
+        </div>
+        <div class="about-card">
+          <div class="about-num">02</div>
+          <h3>Search Strategy</h3>
+          <p>Constraint-based filtering — like a SQL WHERE clause — matches your exact subject, difficulty, and type preferences against the materials database.</p>
+          <code class="formula-code">WHERE subject=? AND difficulty=? AND type=?</code>
+        </div>
+        <div class="about-card">
+          <div class="about-num">03</div>
+          <h3>Heuristic Ranking</h3>
+          <p>After filtering, materials are ranked by a weighted formula that favours challenging content and active learning types.</p>
+          <code class="formula-code">score = adaptive × d_weight × t_weight<br/>Easy→1.0 · Medium→1.1 · Hard→1.2<br/>Video→1.0 · Notes→1.05 · Practice→1.1</code>
+        </div>
+        <div class="about-card">
+          <div class="about-num">04</div>
+          <h3>Adaptive Learning</h3>
+          <p>Every rating you give feeds back into the score. More positive ratings push a material up; low ratings push it down — mimicking reinforcement learning.</p>
+          <code class="formula-code">adaptive = (base + Σ ratings) / (1 + N)</code>
+        </div>
+      </div>
+
+      <div class="dataset-info">
+        <h3>📁 Dataset</h3>
+        <p>30 curated study materials across 4 subjects, 3 difficulty levels, and 3 types — all starting with a base score of 3.5 that evolves with your feedback.</p>
+        <div class="dataset-chips">
+          <span class="dchip">4 Subjects</span>
+          <span class="dchip">3 Difficulties</span>
+          <span class="dchip">3 Types</span>
+          <span class="dchip">30 Materials</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FEEDBACK MODAL -->
+  <div class="modal-overlay hidden" id="feedback-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3>⭐ Rate this material</h3>
+      <p id="modal-title-text" class="modal-material-name"></p>
+      <p class="modal-hint">How useful was this material? (1 = Poor, 5 = Excellent)</p>
+      <div class="star-picker" id="star-picker">
+        <span class="star" data-val="1">★</span>
+        <span class="star" data-val="2">★</span>
+        <span class="star" data-val="3">★</span>
+        <span class="star" data-val="4">★</span>
+        <span class="star" data-val="5">★</span>
+      </div>
+      <p class="selected-rating-text" id="rating-label">Select a rating</p>
+      <button class="btn-primary full-width" id="submit-rating-btn" onclick="submitRating()" disabled>Submit Rating</button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
